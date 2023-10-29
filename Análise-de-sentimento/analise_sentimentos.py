@@ -74,4 +74,4 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 lista_de_produtos = ["DVD player automotivo", "Esteira elétrica para fitness", "Grill elétrico para churrasco", "Mixer de sucos e vitaminas", "Tapete de yoga", "Miniatura de carro colecionável", "Balança de cozinha digital", "Jogo de copos e taças de cristal", "Tabuleiro de xadrez de madeira", "Boia inflável para piscina"]
 for nome_do_produto in lista_de_produtos:
-    analise_de_sentimento(nome_do_produto)
+    
