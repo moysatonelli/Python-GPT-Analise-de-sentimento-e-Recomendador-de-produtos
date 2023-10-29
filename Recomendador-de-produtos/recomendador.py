@@ -85,6 +85,7 @@ def recomenda_produtos(perfil, lista_de_produtos):
     print("Finalizando recomendação de produtos")
     return conteudo
 
+#nessa etapa é realizada o prompt de recomendações
 def escreve_email(recomendacoes):
     print("3. Escrevendo e-mail de recomendação")
     prompt_sistema = f"""
