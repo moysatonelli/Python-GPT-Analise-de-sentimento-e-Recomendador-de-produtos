@@ -3,6 +3,7 @@ import openai
 import dotenv
 import json
 
+
 def carrega(nome_do_arquivo):
     try:
         with open(nome_do_arquivo, "r") as arquivo:
@@ -11,6 +12,7 @@ def carrega(nome_do_arquivo):
     except IOError as e:
         print(f"Erro no carregamento de arquivo: {e}")
 
+
 def salva(nome_do_arquivo, conteudo):
     try:
         with open(nome_do_arquivo, "w", encoding="utf-8") as arquivo:
@@ -18,6 +20,8 @@ def salva(nome_do_arquivo, conteudo):
     except IOError as e:
         print(f"Erro ao salvar arquivo: {e}")
 
+
+# nessa etapa é realizado o prompt de indentificações de perfis
 def identifica_perfis(lista_de_compras_por_cliente):
     print("1. Iniciando identificação de perfis")
     prompt_sistema = """
@@ -42,15 +46,9 @@ def identifica_perfis(lista_de_compras_por_cliente):
     resposta = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=[
-            {
-                "role": "system",
-                "content": prompt_sistema
-            },
-            {
-                "role": "user",
-                "content": lista_de_compras_por_cliente
-            }
-        ]
+            {"role": "system", "content": prompt_sistema},
+            {"role": "user", "content": lista_de_compras_por_cliente},
+        ],
     )
 
     conteudo = resposta.choices[0].message.content
@@ -58,6 +56,8 @@ def identifica_perfis(lista_de_compras_por_cliente):
     print("Finalizou identificação de perfis")
     return json_resultado
 
+
+# nessa etapa é realizado o prompt de recomendação de produtos por perfil
 def recomenda_produtos(perfil, lista_de_produtos):
     print("2. Iniciando recomendação de produtos")
     prompt_sistema = f"""
@@ -72,20 +72,15 @@ def recomenda_produtos(perfil, lista_de_produtos):
     """
 
     resposta = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {
-                "role": "system",
-                "content": prompt_sistema
-            }
-        ]
+        model="gpt-3.5-turbo", messages=[{"role": "system", "content": prompt_sistema}]
     )
 
     conteudo = resposta.choices[0].message.content
     print("Finalizando recomendação de produtos")
     return conteudo
 
-#nessa etapa é realizada o prompt de recomendações
+
+# nessa etapa é realizada o prompt de recomendações para os e-mail de clientes
 def escreve_email(recomendacoes):
     print("3. Escrevendo e-mail de recomendação")
     prompt_sistema = f"""
@@ -99,18 +94,13 @@ def escreve_email(recomendacoes):
     """
 
     resposta = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {
-                "role": "system",
-                "content": prompt_sistema
-            }
-        ]
+        model="gpt-3.5-turbo", messages=[{"role": "system", "content": prompt_sistema}]
     )
 
     conteudo = resposta.choices[0].message.content
     print("Finalizando a escrita do e-mail")
     return conteudo
+
 
 dotenv.load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
